@@ -3,7 +3,7 @@ package com.example;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
-import de.gurkenlabs.litiengine.graphics.RenderEngine;
+import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.screens.GameScreen;
 
 import java.awt.*;
@@ -39,7 +39,8 @@ public class MainScreen extends GameScreen implements IUpdateable {
   @Override
   public void render(Graphics2D g) {
     super.render(g);
-    RenderEngine.render(g, Game.world().environment().getEmitters());
+    g.setFont(FontManager.getPlainFont());
+    TextRenderer.renderWithOutline(g, "hello", Game.world().environment().getCenter(), Color.BLACK);
   }
 
   public void renderLifeBar(Mob e, Graphics2D g) {

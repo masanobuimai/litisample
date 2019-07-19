@@ -34,6 +34,8 @@ public abstract class Mob extends Creature implements IUpdateable {
 
     setTeam(team);
     addHitListener(e -> {
+      Game.world().environment().add(new FloatingTextEmitter(String.valueOf((int) e.getDamage()),
+                                                             e.getEntity().getCenter(), Color.WHITE));
       IAnimationController controller = e.getEntity().getAnimationController();
       controller.add(new OverlayPixelsImageEffect(50, Color.RED));
       Game.loop().perform(50, () -> controller.add(new OverlayPixelsImageEffect(50, Color.WHITE)));
