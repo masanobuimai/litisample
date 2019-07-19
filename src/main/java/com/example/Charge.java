@@ -7,8 +7,9 @@ import de.gurkenlabs.litiengine.abilities.effects.EffectTarget;
 import de.gurkenlabs.litiengine.annotation.AbilityInfo;
 import de.gurkenlabs.litiengine.entities.Creature;
 
-@AbilityInfo(name = "Charge", cooldown = 6500, value = 200, duration = 300)
+@AbilityInfo(name = "Charge", cooldown = 1000, duration = 10)
 public class Charge extends Ability {
+  private static int damage = 20;
   private ChargeEffect chargeEffect;
 
   public Charge(Creature executor) {
@@ -18,16 +19,13 @@ public class Charge extends Ability {
     this.addEffect(chargeEffect);
   }
 
-  public static class ChargeEffect extends Effect {
-    private static int damage = 40;
-
+  public class ChargeEffect extends Effect {
     public ChargeEffect(final Ability ability) {
       super(ability, EffectTarget.EXECUTINGENTITY);
     }
 
     @Override
     public void update() {
-      System.out.println("ChargeEffect.update");
       Game.world().environment()
           .findCombatEntities(this.getAbility().getExecutor().getCollisionBox(),
                               combatEntity -> getAbility().getExecutor().getTeam() != combatEntity.getTeam())

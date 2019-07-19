@@ -11,10 +11,11 @@ import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.graphics.emitters.Emitter;
 import de.gurkenlabs.litiengine.graphics.emitters.FireEmitter;
 
+
 @EntityInfo(width = 18, height = 18)
-@MovementInfo(velocity = 70)
+@MovementInfo(velocity = 60)
 @CollisionInfo(collisionBoxWidth = 8, collisionBoxHeight = 16, collision = true)
-@CombatInfo
+@CombatInfo(hitpoints = 100)
 public abstract class Mob extends Creature implements IUpdateable {
   protected static final int LEFT = 0;
   protected static final int RIGHT = 1;
@@ -26,6 +27,7 @@ public abstract class Mob extends Creature implements IUpdateable {
     super(name);
     this.charge = new Charge(this);
     this.direction = direction;
+
     setTeam(team);
     addHitListener(e -> {
       System.out.println(e.getDamage() + " damage from " + e.getEntity());
