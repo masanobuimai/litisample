@@ -246,20 +246,22 @@
 </data>
    </layer>
    <objectgroup id="0" name="default">
-    <object id="1" name="ground" type="COLLISIONBOX" x="0" y="200" width="320" height="40">
-     <properties>
-      <property name="collisionType" value="STATIC"/>
-     </properties>
-    </object>
-    <object id="4" name="respawn" type="SPAWNPOINT" x="0" y="176" width="16" height="16"/>
-    <object id="5" name="spawn" type="SPAWNPOINT" x="304" y="176" width="16" height="16">
+    <object id="4" name="respawn" type="SPAWNPOINT" x="8" y="176" width="16" height="16"/>
+    <object id="5" name="spawn" type="SPAWNPOINT" x="296" y="176" width="16" height="16">
      <properties>
       <property name="spawnDirection" value="DOWN"/>
      </properties>
     </object>
-    <object id="6" name="leftwall" type="COLLISIONBOX" x="0" y="128" width="0" height="112">
+    <object id="6" name="leftwall" type="COLLISIONBOX" x="0" y="0" width="6" height="240">
      <properties>
       <property name="collisionType" value="STATIC"/>
+      <property name="tags" value="wall"/>
+     </properties>
+    </object>
+    <object id="7" name="rightwall" type="COLLISIONBOX" x="314" y="0" width="6" height="240">
+     <properties>
+      <property name="collisionType" value="STATIC"/>
+      <property name="tags" value="wall"/>
      </properties>
     </object>
    </objectgroup>

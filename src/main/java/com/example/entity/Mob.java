@@ -55,7 +55,7 @@ public abstract class Mob extends Creature implements IUpdateable {
     if (isDead()) {
       return;
     }
-    if (getX() < 0 || 320 < getX()) {
+    if (getX() < 4 || 300 < getX()) {
       die();
     }
     setAngle(direction.toAngle());
