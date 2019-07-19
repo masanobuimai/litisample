@@ -1,4 +1,4 @@
-package com.example;
+package com.example.entity;
 
 import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.annotation.CollisionInfo;

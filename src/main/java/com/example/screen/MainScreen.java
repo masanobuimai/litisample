@@ -1,5 +1,8 @@
-package com.example;
+package com.example.screen;
 
+import com.example.FontManager;
+import com.example.entity.Enemy;
+import com.example.entity.Mob;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;

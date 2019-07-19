@@ -1,5 +1,7 @@
-package com.example;
+package com.example.entity;
 
+import com.example.entity.ext.Charge;
+import com.example.entity.ext.FloatingTextEmitter;
 import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
@@ -14,7 +16,6 @@ import de.gurkenlabs.litiengine.graphics.emitters.Emitter;
 import de.gurkenlabs.litiengine.graphics.emitters.FireEmitter;
 
 import java.awt.*;
-
 
 @EntityInfo(width = 18, height = 18)
 @MovementInfo(velocity = 60)

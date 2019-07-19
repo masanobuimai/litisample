@@ -1,4 +1,4 @@
-package com.example;
+package com.example.screen;
 
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
@@ -26,8 +26,10 @@ public class Hud extends GuiComponent {
     double healthBarX = screenWidth / 2.0D - healthBarMaxWidth / 2.0D;
     double healthBarY = screenHeight * 58.0D / 64.0D;
     double currentHealthRatio = 0.5d;
-    Rectangle2D healthShadowRect = new Rectangle2D.Double(healthBarX - 2.0D, healthBarY - 2.0D, healthBarMaxWidth + 4.0D, healthBarHeight + 4.0D);
-    Rectangle2D healthRect = new Rectangle2D.Double(healthBarX, healthBarY, currentHealthRatio * healthBarMaxWidth, healthBarHeight);
+    Rectangle2D healthShadowRect = new Rectangle2D.Double(healthBarX - 2.0D, healthBarY - 2.0D,
+                                                          healthBarMaxWidth + 4.0D, healthBarHeight + 4.0D);
+    Rectangle2D healthRect = new Rectangle2D.Double(healthBarX, healthBarY,
+                                                    currentHealthRatio * healthBarMaxWidth, healthBarHeight);
     g.setColor(shadowColor);
     g.fill(healthShadowRect);
     g.setColor(hudRedColor);

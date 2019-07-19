@@ -1,4 +1,4 @@
-package com.example;
+package com.example.entity.ext;
 
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.abilities.Ability;

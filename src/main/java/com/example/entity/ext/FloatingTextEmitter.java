@@ -1,5 +1,6 @@
-package com.example;
+package com.example.entity.ext;
 
+import com.example.FontManager;
 import de.gurkenlabs.litiengine.annotation.EmitterInfo;
 import de.gurkenlabs.litiengine.graphics.emitters.Emitter;
 import de.gurkenlabs.litiengine.graphics.emitters.particles.Particle;
@@ -16,8 +17,8 @@ import java.awt.geom.Point2D;
     particleMaxTTL = 900
 )
 public class FloatingTextEmitter extends Emitter {
-  public final String text;
-  public final Color color;
+  private final String text;
+  private final Color color;
 
   public FloatingTextEmitter(String text, Point2D origin, Color color) {
     super(origin);
