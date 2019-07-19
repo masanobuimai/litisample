@@ -8,8 +8,12 @@ import de.gurkenlabs.litiengine.annotation.CombatInfo;
 import de.gurkenlabs.litiengine.annotation.EntityInfo;
 import de.gurkenlabs.litiengine.annotation.MovementInfo;
 import de.gurkenlabs.litiengine.entities.Creature;
+import de.gurkenlabs.litiengine.graphics.OverlayPixelsImageEffect;
+import de.gurkenlabs.litiengine.graphics.animation.IAnimationController;
 import de.gurkenlabs.litiengine.graphics.emitters.Emitter;
 import de.gurkenlabs.litiengine.graphics.emitters.FireEmitter;
+
+import java.awt.*;
 
 
 @EntityInfo(width = 18, height = 18)
@@ -30,7 +34,9 @@ public abstract class Mob extends Creature implements IUpdateable {
 
     setTeam(team);
     addHitListener(e -> {
-      System.out.println(e.getDamage() + " damage from " + e.getEntity());
+      IAnimationController controller = e.getEntity().getAnimationController();
+      controller.add(new OverlayPixelsImageEffect(50, Color.RED));
+      Game.loop().perform(50, () -> controller.add(new OverlayPixelsImageEffect(50, Color.WHITE)));
     });
     addDeathListener(e -> {
       Emitter emitter = new FireEmitter(10, 10);
