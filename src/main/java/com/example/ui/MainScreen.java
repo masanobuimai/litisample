@@ -1,4 +1,4 @@
-package com.example.screen;
+package com.example.ui;
 
 import com.example.FontManager;
 import com.example.entity.Enemy;

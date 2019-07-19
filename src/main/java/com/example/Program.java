@@ -1,7 +1,7 @@
 package com.example;
 
 import com.example.entity.Player;
-import com.example.screen.MainScreen;
+import com.example.ui.MainScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.Camera;
