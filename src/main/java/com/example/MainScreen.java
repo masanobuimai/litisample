@@ -25,7 +25,6 @@ public class MainScreen extends GameScreen implements IUpdateable {
       Enemy enemy = new Enemy();
       Spawnpoint point = Game.world().environment().getSpawnpoint("spawn");
       point.spawn(enemy);
-      System.out.println("update!!" + Game.loop().getTicks());
       count++;
     }
   }

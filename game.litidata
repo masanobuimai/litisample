@@ -251,7 +251,7 @@
       <property name="collisionType" value="STATIC"/>
      </properties>
     </object>
-    <object id="4" name="respawn" type="SPAWNPOINT" x="0" y="184" width="16" height="16"/>
+    <object id="4" name="respawn" type="SPAWNPOINT" x="0" y="176" width="16" height="16"/>
     <object id="5" name="spawn" type="SPAWNPOINT" x="304" y="176" width="16" height="16">
      <properties>
       <property name="spawnDirection" value="DOWN"/>

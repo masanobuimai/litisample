@@ -1,0 +1,53 @@
+package com.example;
+
+import de.gurkenlabs.litiengine.Direction;
+import de.gurkenlabs.litiengine.Game;
+import de.gurkenlabs.litiengine.IUpdateable;
+import de.gurkenlabs.litiengine.annotation.CollisionInfo;
+import de.gurkenlabs.litiengine.annotation.CombatInfo;
+import de.gurkenlabs.litiengine.annotation.EntityInfo;
+import de.gurkenlabs.litiengine.annotation.MovementInfo;
+import de.gurkenlabs.litiengine.entities.Creature;
+import de.gurkenlabs.litiengine.graphics.emitters.Emitter;
+import de.gurkenlabs.litiengine.graphics.emitters.FireEmitter;
+
+@EntityInfo(width = 18, height = 18)
+@MovementInfo(velocity = 70)
+@CollisionInfo(collisionBoxWidth = 8, collisionBoxHeight = 16, collision = true)
+@CombatInfo
+public abstract class Mob extends Creature implements IUpdateable {
+  protected static final int LEFT = 0;
+  protected static final int RIGHT = 1;
+
+  private Charge charge;
+  private Direction direction;
+
+  public Mob(String name, Direction direction, int team) {
+    super(name);
+    this.charge = new Charge(this);
+    this.direction = direction;
+    setTeam(team);
+    addHitListener(e -> {
+      System.out.println(e.getDamage() + " damage from " + e.getEntity());
+    });
+    addDeathListener(e -> {
+      Emitter emitter = new FireEmitter(10, 10);
+      emitter.setTimeToLive(1000);
+      Game.world().environment().add(emitter);
+      Game.world().environment().remove(e);
+    });
+  }
+
+  @Override
+  public void update() {
+    if (isDead()) {
+      return;
+    }
+    if (getX() < 0 || 320 < getX()) {
+      die();
+    }
+    setAngle(direction.toAngle());
+    charge.cast();
+    Game.physics().move(this, this.getTickVelocity());
+  }
+}
