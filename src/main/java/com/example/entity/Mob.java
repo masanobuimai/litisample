@@ -42,8 +42,9 @@ public abstract class Mob extends Creature implements IUpdateable {
       Game.loop().perform(50, () -> controller.add(new OverlayPixelsImageEffect(50, Color.WHITE)));
     });
     addDeathListener(e -> {
-      Emitter emitter = new FireEmitter(10, 10);
-      emitter.setTimeToLive(1000);
+      Emitter emitter = new FireEmitter((int) e.getX(), (int) e.getY());
+      emitter.setHeight(e.getHeight());
+      emitter.setTimeToLive(1600);
       Game.world().environment().add(emitter);
       Game.world().environment().remove(e);
     });
