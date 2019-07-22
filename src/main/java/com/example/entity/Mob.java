@@ -2,7 +2,6 @@ package com.example.entity;
 
 import com.example.entity.ext.Charge;
 import com.example.entity.ext.FloatingTextEmitter;
-import de.gurkenlabs.litiengine.Direction;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.annotation.CollisionInfo;
@@ -22,24 +21,22 @@ import java.awt.*;
 @CollisionInfo(collisionBoxWidth = 8, collisionBoxHeight = 16, collision = true)
 @CombatInfo(hitpoints = 100)
 public abstract class Mob extends Creature implements IUpdateable {
-  protected static final int LEFT = 0;
-  protected static final int RIGHT = 1;
+  protected static final int LEFT_SIDE = 0;
+  protected static final int RIGHT_SIDE = 1;
 
   private Charge charge;
-  private Direction direction;
 
-  public Mob(String name, Direction direction, int team) {
+  public Mob(String name, int team) {
     super(name);
     this.charge = new Charge(this);
-    this.direction = direction;
 
     setTeam(team);
     addHitListener(e -> {
       Game.world().environment().add(new FloatingTextEmitter(String.valueOf((int) e.getDamage()),
                                                              e.getEntity().getCenter(), Color.WHITE));
       IAnimationController controller = e.getEntity().getAnimationController();
-      controller.add(new OverlayPixelsImageEffect(50, Color.RED));
-      Game.loop().perform(50, () -> controller.add(new OverlayPixelsImageEffect(50, Color.WHITE)));
+      controller.add(new OverlayPixelsImageEffect(50, Color.WHITE));
+      Game.loop().perform(50, () -> controller.add(new OverlayPixelsImageEffect(50, Color.RED)));
     });
     addDeathListener(e -> {
       Emitter emitter = new FireEmitter((int) e.getX(), (int) e.getY());
@@ -55,11 +52,11 @@ public abstract class Mob extends Creature implements IUpdateable {
     if (isDead()) {
       return;
     }
-    if (getX() < 4 || 300 < getX()) {
-      die();
-    }
-    setAngle(direction.toAngle());
     charge.cast();
     Game.physics().move(this, this.getTickVelocity());
+    Game.world().environment().getCollisionBoxes().stream()
+        .filter(c -> c.getTags().contains("wall"))
+        .filter(c -> getHitBox().intersects(c.getCollisionBox()))
+        .forEach(c -> die());
   }
 }

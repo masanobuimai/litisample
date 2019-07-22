@@ -17,7 +17,7 @@ public class FontManager {
   }
 
   public static Font getBoldFont() {
-    return getFont("04B_19.ttf", 8.0f);
+    return getFont("04B_19.ttf", 16.0f);
   }
 
   private static Font getFont(String fontName, float fontSize) {

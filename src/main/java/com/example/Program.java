@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 public class Program {
   public static void main(String[] args) {
     Game.init(args);
-    Game.graphics().setBaseRenderScale(1.0f);
+    Game.graphics().setBaseRenderScale(2.0f);
 
     Game.screens().add(new MainScreen());
     Resources.load("game.litidata");
@@ -23,11 +23,12 @@ public class Program {
     Camera cam = new Camera();
     cam.setFocus(Game.world().environment().getCenter());
     Game.world().setCamera(cam);
-//    Game.world().setGravity(120);
     Player player = new Player();
     Spawnpoint point = Game.world().environment().getSpawnpoint("respawn");
     point.spawn(player);
+    player.setY(point.getY() - player.getHeight());
 
     Game.start();
+    System.out.println("finish");
   }
 }

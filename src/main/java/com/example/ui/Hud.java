@@ -24,10 +24,10 @@ public class Hud extends GuiComponent {
   private void renderHealthBar(Graphics2D g) {
     double screenWidth = Game.screens().current().getWidth();
     double screenHeight = Game.screens().current().getHeight();
-    double healthBarMaxWidth = screenWidth * 12.0D / 64.0D;
-    double healthBarHeight = screenHeight * 2.0D / 64.0D;
-    double healthBarX = screenWidth / 2.0D - healthBarMaxWidth / 2.0D;
-    double healthBarY = screenHeight * 58.0D / 64.0D;
+    double healthBarMaxWidth = screenWidth * 0.3;
+    double healthBarHeight = screenHeight * 0.05;
+    double healthBarX = (screenWidth - healthBarMaxWidth) / 2.0D;
+    double healthBarY = screenHeight * 0.85;
     double currentHealthRatio = 0.5d;
     String healthRatioText = "50";
     Rectangle2D healthShadowRect = new Rectangle2D.Double(healthBarX - 2.0D, healthBarY - 2.0D,
