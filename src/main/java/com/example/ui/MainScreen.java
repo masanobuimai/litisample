@@ -17,6 +17,7 @@ import java.awt.geom.Rectangle2D;
 public class MainScreen extends GameScreen implements IUpdateable {
   private Hud hud;
 
+  private static final int MAX_COUNT = 10;
   private int count;
 
   public MainScreen() {
@@ -32,16 +33,16 @@ public class MainScreen extends GameScreen implements IUpdateable {
 
   @Override
   public void update() {
-    if (Game.loop().getTicks() % 30 == 0 && count < 10) {
+    if (Game.loop().getTicks() % 60 == 0 && count < MAX_COUNT) {
       Enemy enemy = new Enemy();
       Spawnpoint pointEnemy = Game.world().environment().getSpawnpoint("spawn");
       pointEnemy.spawn(enemy);
       enemy.setY(pointEnemy.getY() - enemy.getHeight());
+      count++;
       Player player = new Player();
       Spawnpoint point = Game.world().environment().getSpawnpoint("respawn");
       point.spawn(player);
       player.setY(point.getY() - player.getHeight());
-      count++;
     }
   }
 

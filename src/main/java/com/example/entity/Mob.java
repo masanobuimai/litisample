@@ -18,7 +18,7 @@ import java.awt.*;
 
 @EntityInfo(width = 18, height = 18)
 @MovementInfo(velocity = 60)
-@CollisionInfo(collisionBoxWidth = 8, collisionBoxHeight = 16, collision = true)
+@CollisionInfo(collisionBoxWidth = 16, collisionBoxHeight = 18, collision = false)
 @CombatInfo(hitpoints = 100)
 public abstract class Mob extends Creature implements IUpdateable {
   protected static final int LEFT_SIDE = 0;
@@ -32,6 +32,7 @@ public abstract class Mob extends Creature implements IUpdateable {
 
     setTeam(team);
     addHitListener(e -> {
+      setVelocity(0);   // 攻撃を受けても止まる
       Game.world().environment().add(new FloatingTextEmitter(String.valueOf((int) e.getDamage()),
                                                              e.getEntity().getCenter(), Color.WHITE));
       IAnimationController controller = e.getEntity().getAnimationController();
@@ -45,6 +46,10 @@ public abstract class Mob extends Creature implements IUpdateable {
       Game.world().environment().add(emitter);
       Game.world().environment().remove(e);
     });
+  }
+
+  public boolean isEngage(Creature enemy) {
+    return charge.isEngage(enemy);
   }
 
   @Override
