@@ -11,7 +11,7 @@ import de.gurkenlabs.litiengine.entities.Creature;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-@AbilityInfo(name = "Charge", cooldown = 1000, duration = 10)
+@AbilityInfo(name = "Charge", cooldown = 260, duration = 60)
 public class Charge extends Ability {
   private static final Logger log = Logger.getLogger(Charge.class.getName());
 
@@ -19,7 +19,6 @@ public class Charge extends Ability {
   private ChargeEffect chargeEffect;
 
   private float baseVelocity;
-  private double baseAngle;
   private Optional<Mob> enemy;
 
   public Charge(Creature executor) {
@@ -31,6 +30,7 @@ public class Charge extends Ability {
   }
 
   public boolean isEngage(Creature e) {
+    // 自分の相手以外と戦闘中か？
     return enemy.isPresent() && enemy.get() != e;
   }
 
@@ -41,35 +41,32 @@ public class Charge extends Ability {
 
     @Override
     public void update() {
+      super.update();
       Creature myEntity = this.getAbility().getExecutor();
       if (!enemy.isPresent()) {
         // 戦闘中でなければ，次の相手を探す
         enemy = Game.world().environment()
-            .findCombatEntities(myEntity.getCollisionBox(),
+            .findCombatEntities(myEntity.getCollisionBox(),  // 接触してる相手チームで
                                 combatEntity -> myEntity.getTeam() != combatEntity.getTeam()).stream()
-            .map(e -> (Mob) e)
+            .map(e -> (Mob) e)  // 戦闘中ではない相手（自分の相手は対象にする）
             .filter(e -> !e.isEngage(myEntity))
             .findFirst();
         enemy.ifPresent(e -> {
           log.info("次の相手 " + e);
-          baseAngle = myEntity.getAngle();
           baseVelocity = myEntity.getVelocity().getCurrentValue();
-          log.info(myEntity + " v,a = " + baseVelocity + "," + baseAngle);
+          // 戦闘中は歩みを遅くする（0にするとキャラの向きがリセットされるのでやらない）
+          myEntity.setVelocity(0.0001f);
         });
       }
       if (enemy.isPresent()) {
-        log.info("戦闘中 " + myEntity);
-        myEntity.setVelocity(0);  // 戦闘中は止まる
         enemy.ifPresent(e -> {
           if (e.isDead() || e.hit((int) (damage * Math.random()), getAbility())) {
-            log.info("相手をたおした " + myEntity);
-            enemy = Optional.empty(); // 相手は死んじゃった
+            enemy = Optional.empty();
+            // 相手が死んだら，また歩み始める
             myEntity.setVelocity(baseVelocity);
-//            myEntity.setAngle(baseAngle);
           }
         });
       }
-      super.update();
     }
   }
 }

@@ -32,7 +32,6 @@ public abstract class Mob extends Creature implements IUpdateable {
 
     setTeam(team);
     addHitListener(e -> {
-      setVelocity(0);   // 攻撃を受けても止まる
       Game.world().environment().add(new FloatingTextEmitter(String.valueOf((int) e.getDamage()),
                                                              e.getEntity().getCenter(), Color.WHITE));
       IAnimationController controller = e.getEntity().getAnimationController();
