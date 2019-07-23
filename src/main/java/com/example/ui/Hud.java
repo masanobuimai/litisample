@@ -18,7 +18,8 @@ public class Hud extends GuiComponent {
   }
 
   public void render(Graphics2D g) {
-    this.renderHealthBar(g);
+    renderHealthBar(g);
+    renderInventory(g);
   }
 
   private void renderHealthBar(Graphics2D g) {
@@ -45,5 +46,22 @@ public class Hud extends GuiComponent {
     g.fill(healthRect);
     g.setColor(textColor);
     TextRenderer.renderWithOutline(g, healthRatioText, healthTextX, healthTextY, Color.BLACK);
+  }
+
+  private void renderInventory(Graphics2D g) {
+    double screenWidth = Game.screens().current().getWidth();
+    double screenHeight = Game.screens().current().getHeight();
+    double inventoryCellWidth = screenWidth * 0.03;
+    double inventoryMargin = screenWidth * 0.015;
+    double inventoryHeight = inventoryCellWidth;
+    double inventoryX = (screenWidth / 2.0) - (inventoryCellWidth * 1.5) - inventoryMargin;
+    double inventoryY = screenHeight * 0.05;
+
+    for (int i = 1; i < 4; i++) {
+      Rectangle2D shadowRect = new Rectangle2D.Double(inventoryX + i * (inventoryCellWidth + inventoryMargin),
+                                                      inventoryY, inventoryCellWidth, inventoryHeight);
+      g.setColor(shadowColor);
+      g.fill(shadowRect);
+    }
   }
 }

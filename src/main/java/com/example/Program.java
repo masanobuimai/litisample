@@ -20,7 +20,7 @@ public class Program {
       }
     } catch (IOException ignore) {
     }
-    Resources.load("game.litidata");
+    Resources.load(Program.class.getClassLoader().getResource("game.litidata"));
     Game.init(args);
     Game.graphics().setBaseRenderScale(1.0f);
 
