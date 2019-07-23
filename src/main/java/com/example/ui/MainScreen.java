@@ -3,6 +3,7 @@ package com.example.ui;
 import com.example.FontManager;
 import com.example.entity.Enemy;
 import com.example.entity.Mob;
+import com.example.entity.Player;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
@@ -33,9 +34,13 @@ public class MainScreen extends GameScreen implements IUpdateable {
   public void update() {
     if (Game.loop().getTicks() % 30 == 0 && count < 10) {
       Enemy enemy = new Enemy();
-      Spawnpoint point = Game.world().environment().getSpawnpoint("spawn");
-      point.spawn(enemy);
-      enemy.setY(point.getY() - enemy.getHeight());
+      Spawnpoint pointEnemy = Game.world().environment().getSpawnpoint("spawn");
+      pointEnemy.spawn(enemy);
+      enemy.setY(pointEnemy.getY() - enemy.getHeight());
+      Player player = new Player();
+      Spawnpoint point = Game.world().environment().getSpawnpoint("respawn");
+      point.spawn(player);
+      player.setY(point.getY() - player.getHeight());
       count++;
     }
   }
@@ -70,6 +75,7 @@ public class MainScreen extends GameScreen implements IUpdateable {
   public void prepare() {
     super.prepare();
     Game.loop().attach(this);
+    Game.world().loadEnvironment("map");
   }
 
   @Override
