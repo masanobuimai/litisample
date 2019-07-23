@@ -49,8 +49,10 @@ public class MainScreen extends GameScreen implements IUpdateable {
   @Override
   public void render(Graphics2D g) {
     super.render(g);
-    g.setFont(FontManager.getPlainFont());
-    TextRenderer.renderWithOutline(g, "hello", Game.world().environment().getCenter(), Color.BLACK);
+    if (Game.world().environment().getCombatEntities().isEmpty()) {
+      g.setFont(FontManager.getBoldFont());
+      TextRenderer.renderWithOutline(g, "game over", Game.world().environment().getCenter(), Color.BLACK);
+    }
   }
 
   public void renderLifeBar(Mob e, Graphics2D g) {
