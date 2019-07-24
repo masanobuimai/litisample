@@ -3,11 +3,15 @@ package com.example.ui;
 import com.example.FontManager;
 import com.example.entity.Tower;
 import de.gurkenlabs.litiengine.Game;
+import de.gurkenlabs.litiengine.graphics.ImageRenderer;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
+import de.gurkenlabs.litiengine.resources.Resources;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 public class Hud extends GuiComponent {
   public static Color hudRedColor = new Color(188, 12, 12);
@@ -60,11 +64,16 @@ public class Hud extends GuiComponent {
     double inventoryX = (screenWidth / 2.0) - (inventoryCellWidth * 1.5) - (inventoryMargin);
     double inventoryY = screenHeight * 0.05;
 
-    for (int i = 0; i < 3; i++) {
+    String[] icons = new String[]{"prop-painkiller", "prop-beer", "prop-carrot"};
+    for (int i = 0; i < icons.length; i++) {
       Rectangle2D shadowRect = new Rectangle2D.Double(inventoryX + (inventoryCellWidth + inventoryMargin) * i,
                                                       inventoryY, inventoryCellWidth, inventoryHeight);
       g.setColor(shadowColor);
       g.fill(shadowRect);
+      BufferedImage image = Resources.spritesheets().get(icons[i]).getImage();
+      Point2D location = new Point2D.Double(inventoryX + (inventoryCellWidth + inventoryMargin) * i + inventoryCellWidth * 0.5 - image.getWidth() / 2,
+                                            inventoryY + inventoryHeight * 0.5 - image.getHeight() / 2);
+      ImageRenderer.render(g, image, location);
     }
   }
 }
