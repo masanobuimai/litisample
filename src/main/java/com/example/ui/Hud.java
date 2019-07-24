@@ -57,11 +57,11 @@ public class Hud extends GuiComponent {
     double inventoryCellWidth = screenWidth * 0.03;
     double inventoryMargin = screenWidth * 0.015;
     double inventoryHeight = inventoryCellWidth;
-    double inventoryX = (screenWidth / 2.0) - (inventoryCellWidth * 1.5) - inventoryMargin;
+    double inventoryX = (screenWidth / 2.0) - (inventoryCellWidth * 1.5) - (inventoryMargin);
     double inventoryY = screenHeight * 0.05;
 
-    for (int i = 1; i < 4; i++) {
-      Rectangle2D shadowRect = new Rectangle2D.Double(inventoryX + i * (inventoryCellWidth + inventoryMargin),
+    for (int i = 0; i < 3; i++) {
+      Rectangle2D shadowRect = new Rectangle2D.Double(inventoryX + (inventoryCellWidth + inventoryMargin) * i,
                                                       inventoryY, inventoryCellWidth, inventoryHeight);
       g.setColor(shadowColor);
       g.fill(shadowRect);

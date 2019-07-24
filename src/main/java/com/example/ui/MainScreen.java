@@ -1,13 +1,13 @@
 package com.example.ui;
 
 import com.example.FontManager;
+import com.example.Utils;
 import com.example.entity.Enemy;
 import com.example.entity.Mob;
 import com.example.entity.Player;
 import com.example.entity.Tower;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
-import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.screens.GameScreen;
 
@@ -35,15 +35,9 @@ public class MainScreen extends GameScreen implements IUpdateable {
   @Override
   public void update() {
     if (Game.loop().getTicks() % 60 == 0 && count < MAX_COUNT) {
-      Enemy enemy = new Enemy();
-      Spawnpoint pointEnemy = Game.world().environment().getSpawnpoint("spawn");
-      pointEnemy.spawn(enemy);
-      enemy.setY(pointEnemy.getY() - enemy.getHeight());
+      Utils.spawn("spawn", new Enemy());
+      Utils.spawn("respawn", new Player());
       count++;
-      Player player = new Player();
-      Spawnpoint point = Game.world().environment().getSpawnpoint("respawn");
-      point.spawn(player);
-      player.setY(point.getY() - player.getHeight());
     }
   }
 

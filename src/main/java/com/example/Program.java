@@ -27,6 +27,7 @@ public class Program {
     Game.screens().add(new MainScreen());
     Game.screens().add(new TitleScreen());
     Input.keyboard().onKeyPressed(KeyEvent.VK_ESCAPE, e -> System.exit(0));
+    Input.mouse().setGrabMouse(false);
 
     Game.screens().display("title");
     Camera cam = new Camera();
