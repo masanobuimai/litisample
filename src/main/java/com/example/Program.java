@@ -33,6 +33,11 @@ public class Program {
     cam.setFocus(Game.world().environment().getCenter());
     Game.world().setCamera(cam);
     Game.start();
-    System.out.println("finish");
+
+    System.out.println("-----");
+    Resources.spritesheets().getAll().forEach(x -> System.out.println(x.getName()));
+    System.out.println("-----");
+    Resources.fonts().getAll().forEach(System.out::println);
+    System.out.println("-----");
   }
 }

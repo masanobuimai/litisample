@@ -1,6 +1,7 @@
 package com.example.entity.ext;
 
 import com.example.entity.Mob;
+import com.example.entity.Tower;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.abilities.Ability;
 import de.gurkenlabs.litiengine.abilities.effects.Effect;
@@ -19,7 +20,7 @@ public class Charge extends Ability {
   private ChargeEffect chargeEffect;
 
   private float baseVelocity;
-  private Optional<Mob> enemy;
+  private Optional<Creature> enemy;
 
   public Charge(Creature executor) {
     super(executor);
@@ -48,14 +49,21 @@ public class Charge extends Ability {
         enemy = Game.world().environment()
             .findCombatEntities(myEntity.getCollisionBox(),  // 接触してる相手チームで
                                 combatEntity -> myEntity.getTeam() != combatEntity.getTeam()).stream()
-            .map(e -> (Mob) e)  // 戦闘中ではない相手（自分の相手は対象にする）
-            .filter(e -> !e.isEngage(myEntity))
+            .map(e -> (Creature) e)
+            .filter(e -> e instanceof Tower // タワーか
+                         // 戦闘中ではない相手（自分の相手は対象にする）
+                         || (e instanceof Mob && !((Mob) e).isEngage(myEntity)))
             .findFirst();
         enemy.ifPresent(e -> {
           log.info("次の相手 " + e);
           baseVelocity = myEntity.getVelocity().getCurrentValue();
-          // 戦闘中は歩みを遅くする（0にするとキャラの向きがリセットされるのでやらない）
-          myEntity.setVelocity(0.0001f);
+          if (e instanceof Tower) {
+            // タワーだった場合，歩みをちょっと遅くして通り抜けさせる
+            myEntity.setVelocity(baseVelocity * 0.7f);
+          } else {
+            // 戦闘中は歩みを遅くする（0にするとキャラの向きがリセットされるのでやらない）
+            myEntity.setVelocity(0.0001f);
+          }
         });
       }
       if (enemy.isPresent()) {

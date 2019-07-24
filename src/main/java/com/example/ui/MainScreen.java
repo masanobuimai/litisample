@@ -4,6 +4,7 @@ import com.example.FontManager;
 import com.example.entity.Enemy;
 import com.example.entity.Mob;
 import com.example.entity.Player;
+import com.example.entity.Tower;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;
@@ -49,9 +50,12 @@ public class MainScreen extends GameScreen implements IUpdateable {
   @Override
   public void render(Graphics2D g) {
     super.render(g);
-    if (Game.world().environment().getCombatEntities().isEmpty()) {
+    if (Game.world().environment().getCombatEntities().size() == 1) {
+      // タワーだけになったらゲームオーバー
+      String title = "game over:" + (Tower.instance().isDead() ? "loose" : "win!!");
+      g.setColor(Color.WHITE);
       g.setFont(FontManager.getBoldFont());
-      TextRenderer.renderWithOutline(g, "game over", Game.world().environment().getCenter(), Color.BLACK);
+      TextRenderer.renderWithOutline(g, title, Game.world().environment().getCenter(), Color.BLACK);
     }
   }
 

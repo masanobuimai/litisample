@@ -1,6 +1,7 @@
 package com.example.ui;
 
 import com.example.FontManager;
+import com.example.entity.Tower;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.GuiComponent;
@@ -29,8 +30,10 @@ public class Hud extends GuiComponent {
     double healthBarHeight = screenHeight * 0.05;
     double healthBarX = (screenWidth - healthBarMaxWidth) / 2.0D;
     double healthBarY = screenHeight * 0.85;
-    double currentHealthRatio = 0.5d;
-    String healthRatioText = "50";
+    int hp = Tower.instance().getHitPoints().getCurrentValue();
+    int maxHp = Tower.instance().getHitPoints().getMaxValue();
+    double currentHealthRatio = hp * 1.0 / maxHp;
+    String healthRatioText = String.valueOf(hp);
     Rectangle2D healthShadowRect = new Rectangle2D.Double(healthBarX - 2.0D, healthBarY - 2.0D,
                                                           healthBarMaxWidth + 4.0D, healthBarHeight + 4.0D);
     Rectangle2D healthRect = new Rectangle2D.Double(healthBarX, healthBarY,

@@ -1,8 +1,10 @@
 package com.example.ui;
 
 import com.example.FontManager;
+import com.example.entity.Tower;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
+import de.gurkenlabs.litiengine.entities.Spawnpoint;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.screens.GameScreen;
 import de.gurkenlabs.litiengine.input.Input;
@@ -42,6 +44,9 @@ public class TitleScreen extends GameScreen implements IUpdateable {
     Game.loop().perform(600, () -> {
       Game.window().getRenderComponent().fadeIn(500);
       Game.screens().display("main");
+      Spawnpoint point = Game.world().environment().getSpawnpoint("tower");
+      point.spawn(Tower.instance());
+      Tower.instance().setY(point.getY() - Tower.instance().getHeight());
     });
   }
 

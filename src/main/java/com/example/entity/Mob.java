@@ -11,8 +11,6 @@ import de.gurkenlabs.litiengine.annotation.MovementInfo;
 import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.graphics.OverlayPixelsImageEffect;
 import de.gurkenlabs.litiengine.graphics.animation.IAnimationController;
-import de.gurkenlabs.litiengine.graphics.emitters.Emitter;
-import de.gurkenlabs.litiengine.graphics.emitters.FireEmitter;
 
 import java.awt.*;
 
@@ -39,10 +37,6 @@ public abstract class Mob extends Creature implements IUpdateable {
       Game.loop().perform(50, () -> controller.add(new OverlayPixelsImageEffect(50, Color.RED)));
     });
     addDeathListener(e -> {
-      Emitter emitter = new FireEmitter((int) e.getX(), (int) e.getY());
-      emitter.setHeight(e.getHeight());
-      emitter.setTimeToLive(1600);
-      Game.world().environment().add(emitter);
       Game.world().environment().remove(e);
     });
   }
