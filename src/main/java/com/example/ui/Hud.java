@@ -1,7 +1,7 @@
 package com.example.ui;
 
-import com.example.FontManager;
-import com.example.entity.Tower;
+import com.example.GameManager;
+import com.example.Utils;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.ImageRenderer;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
@@ -34,15 +34,15 @@ public class Hud extends GuiComponent {
     double healthBarHeight = screenHeight * 0.05;
     double healthBarX = (screenWidth - healthBarMaxWidth) / 2.0D;
     double healthBarY = screenHeight * 0.85;
-    int hp = Tower.instance().getHitPoints().getCurrentValue();
-    int maxHp = Tower.instance().getHitPoints().getMaxValue();
+    int hp = GameManager.tower().getHitPoints().getCurrentValue();
+    int maxHp = GameManager.tower().getHitPoints().getMaxValue();
     double currentHealthRatio = hp * 1.0 / maxHp;
     String healthRatioText = String.valueOf(hp);
     Rectangle2D healthShadowRect = new Rectangle2D.Double(healthBarX - 2.0D, healthBarY - 2.0D,
                                                           healthBarMaxWidth + 4.0D, healthBarHeight + 4.0D);
     Rectangle2D healthRect = new Rectangle2D.Double(healthBarX, healthBarY,
                                                     currentHealthRatio * healthBarMaxWidth, healthBarHeight);
-    g.setFont(FontManager.getBoldFont());
+    g.setFont(Utils.fontBold());
     FontMetrics fm = g.getFontMetrics();
     double healthTextX = healthBarX + healthBarMaxWidth / 2.0D - (double) fm.stringWidth(healthRatioText) / 2.0D;
     double healthTextY = healthBarY + (double) fm.getAscent() + (healthBarHeight - (double) (fm.getAscent() + fm.getDescent())) / 2.0D;

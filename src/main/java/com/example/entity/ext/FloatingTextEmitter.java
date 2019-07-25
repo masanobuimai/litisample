@@ -1,6 +1,6 @@
 package com.example.entity.ext;
 
-import com.example.FontManager;
+import com.example.Utils;
 import de.gurkenlabs.litiengine.annotation.EmitterInfo;
 import de.gurkenlabs.litiengine.graphics.emitters.Emitter;
 import de.gurkenlabs.litiengine.graphics.emitters.particles.Particle;
@@ -30,7 +30,7 @@ public class FloatingTextEmitter extends Emitter {
     TextParticle particle = new TextParticle(text, color, getParticleMaxTTL());
     particle.setY(-16f);
     particle.setDeltaIncY(-0.05f);
-    particle.setFont(FontManager.getPlainFont());
+    particle.setFont(Utils.fontPlain());
     return particle;
   }
 }

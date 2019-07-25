@@ -1,11 +1,8 @@
 package com.example.ui;
 
-import com.example.FontManager;
+import com.example.GameManager;
 import com.example.Utils;
-import com.example.entity.Enemy;
 import com.example.entity.Mob;
-import com.example.entity.Player;
-import com.example.entity.Tower;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
@@ -17,9 +14,6 @@ import java.awt.geom.Rectangle2D;
 
 public class MainScreen extends GameScreen implements IUpdateable {
   private Hud hud;
-
-  private static final int MAX_COUNT = 10;
-  private int count;
 
   public MainScreen() {
     super("main");
@@ -34,21 +28,17 @@ public class MainScreen extends GameScreen implements IUpdateable {
 
   @Override
   public void update() {
-    if (Game.loop().getTicks() % 60 == 0 && count < MAX_COUNT) {
-      Utils.spawn("spawn", new Enemy());
-      Utils.spawn("respawn", new Player());
-      count++;
-    }
+    GameManager.update();
   }
 
   @Override
   public void render(Graphics2D g) {
     super.render(g);
-    if (Game.world().environment().getCombatEntities().size() == 1) {
+    if (GameManager.gameover()) {
       // タワーだけになったらゲームオーバー
-      String title = "game over:" + (Tower.instance().isDead() ? "loose" : "win!!");
+      String title = "game over:" + (GameManager.tower().isDead() ? "loose" : "win!!");
       g.setColor(Color.WHITE);
-      g.setFont(FontManager.getBoldFont());
+      g.setFont(Utils.fontBold());
       TextRenderer.renderWithOutline(g, title, Game.world().environment().getCenter(), Color.BLACK);
     }
   }

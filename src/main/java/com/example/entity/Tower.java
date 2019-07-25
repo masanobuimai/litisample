@@ -16,14 +16,7 @@ import java.awt.*;
 @CollisionInfo(collisionBoxWidth = 16, collisionBoxHeight = 18, collision = false)
 @CombatInfo(hitpoints = 1000)
 public class Tower extends Creature {
-
-  private static final Tower singleton = new Tower();
-
-  public static Tower instance() {
-    return singleton;
-  }
-
-  private Tower() {
+  public Tower() {
     super("bunker");
     setTeam(0);
     setVelocity(0);
