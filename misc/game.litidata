@@ -50,7 +50,7 @@
     </object>
     <object id="5" name="tower" type="SPAWNPOINT" x="88" y="112" width="16" height="8">
      <properties>
-      <property name="spawnDirection" value="UNDEFINED"/>
+      <property name="spawnDirection" value="RIGHT"/>
      </properties>
     </object>
    </objectgroup>

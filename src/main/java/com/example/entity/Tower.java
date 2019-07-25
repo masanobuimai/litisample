@@ -1,5 +1,7 @@
 package com.example.entity;
 
+import com.example.Utils;
+import com.example.entity.ext.Shoot;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.annotation.CollisionInfo;
 import de.gurkenlabs.litiengine.annotation.CombatInfo;
@@ -9,6 +11,7 @@ import de.gurkenlabs.litiengine.graphics.OverlayPixelsImageEffect;
 import de.gurkenlabs.litiengine.graphics.animation.IAnimationController;
 import de.gurkenlabs.litiengine.graphics.emitters.Emitter;
 import de.gurkenlabs.litiengine.graphics.emitters.FireEmitter;
+import de.gurkenlabs.litiengine.graphics.emitters.ShimmerEmitter;
 
 import java.awt.*;
 
@@ -16,10 +19,13 @@ import java.awt.*;
 @CollisionInfo(collisionBoxWidth = 16, collisionBoxHeight = 18, collision = false)
 @CombatInfo(hitpoints = 1000)
 public class Tower extends Creature {
+  private Shoot shootAbility;
+
   public Tower() {
     super("bunker");
     setTeam(0);
     setVelocity(0);
+    shootAbility = new Shoot(this);
     addHitListener(e -> {
       IAnimationController controller = e.getEntity().getAnimationController();
       controller.add(new OverlayPixelsImageEffect(50, Color.WHITE));
@@ -30,5 +36,22 @@ public class Tower extends Creature {
       emitter.setHeight(e.getHeight());
       Game.world().environment().add(emitter);
     });
+  }
+
+  public void consumePill() {
+    ShimmerEmitter emitter = new ShimmerEmitter(this.getX(), this.getY());
+    emitter.setTimeToLive(2000);
+    Game.world().environment().add(emitter);
+  }
+
+  public void consumeShake() {
+    Game.world().camera().shake(1.5, 30, 1000);
+    Game.loop().perform(1000, () -> {
+      Game.world().camera().setFocus(Game.world().environment().getCenter());
+    });
+  }
+
+  public void consumeShoot() {
+    Utils.spawn("tower", new SpecialMob());
   }
 }

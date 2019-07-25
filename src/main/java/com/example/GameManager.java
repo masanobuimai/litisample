@@ -25,7 +25,11 @@ public class GameManager {
 
   private static GameState state;
 
-  private static final int MAX_COUNT = 10;
+  private static final int MAX_COUNT = 30;
+
+  private static boolean timing() {
+    return Game.loop().getTicks() % 30 == 0;
+  }
 
   private static int count;
 
@@ -46,7 +50,7 @@ public class GameManager {
 
     Game.init();
     state = GameState.READY;
-    Game.graphics().setBaseRenderScale(1.0f);
+    Game.graphics().setBaseRenderScale(2.0f);
 
     Game.screens().add(new MainScreen());
     Game.screens().add(new TitleScreen());
@@ -68,7 +72,23 @@ public class GameManager {
     Input.mouse().setGrabMouse(false);
     Input.keyboard().onKeyReleased(KeyEvent.VK_ESCAPE, e -> System.exit(0));
     Input.keyboard().onKeyReleased(KeyEvent.VK_SPACE, e -> startGame());
+    Input.keyboard().onKeyReleased(KeyEvent.VK_F1, e -> {
+      if (state == GameState.INGAME && !tower().isDead()) {
+        tower.consumePill();
+      }
+    });
+    Input.keyboard().onKeyReleased(KeyEvent.VK_F2, e -> {
+      if (state == GameState.INGAME && !tower().isDead()) {
+        tower.consumeShake();
+      }
+    });
+    Input.keyboard().onKeyReleased(KeyEvent.VK_F3, e -> {
+      if (state == GameState.INGAME && !tower().isDead()) {
+        tower.consumeShoot();
+      }
+    });
   }
+
 
   private static void startGame() {
     log.info(() -> "state:" + state);
@@ -86,7 +106,7 @@ public class GameManager {
   }
 
   public static void update() {
-    if (Game.loop().getTicks() % 30 == 0 && count < MAX_COUNT) {
+    if (timing() && count < MAX_COUNT) {
       Utils.spawn("spawn", new Enemy());
       Utils.spawn("respawn", new Player());
       count++;
