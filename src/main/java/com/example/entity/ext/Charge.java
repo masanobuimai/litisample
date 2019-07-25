@@ -12,12 +12,11 @@ import de.gurkenlabs.litiengine.entities.Creature;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-@AbilityInfo(name = "Charge", cooldown = 260, duration = 60)
+@AbilityInfo(name = "Charge", cooldown = 260, duration = 5)
 public class Charge extends Ability {
   private static final Logger log = Logger.getLogger(Charge.class.getName());
 
   private static int damage = 20;
-  private ChargeEffect chargeEffect;
 
   private float baseVelocity;
   private Optional<Creature> enemy;
@@ -26,9 +25,8 @@ public class Charge extends Ability {
     super(executor);
 
     this.baseVelocity = executor.getVelocity().getCurrentValue();
-    this.chargeEffect = new ChargeEffect(this);
-    this.addEffect(chargeEffect);
     this.enemy = Optional.empty();
+    this.addEffect(new ChargeEffect(this));
   }
 
   public boolean isEngage(Creature e) {

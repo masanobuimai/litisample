@@ -18,12 +18,19 @@ public class Utils {
     entity.setY(point.getY() - entity.getHeight());
   }
 
+  public static void checkCorner(Creature entity) {
+    Game.world().environment().getCollisionBoxes().stream()
+        .filter(c -> c.getTags().contains("wall"))
+        .filter(c -> entity.getHitBox().intersects(c.getCollisionBox()))
+        .forEach(c -> entity.die());
+  }
+
   public static Font fontPlain() {
-    return getFont("fsex300.ttf", 8.0f);
+    return getFont("PICO-8.ttf", 8.0f);
   }
 
   public static Font fontBold() {
-    return getFont("04B_19.ttf", 16.0f);
+    return getFont("PICO-8.ttf", 16.0f);
   }
 
   private static Font getFont(String fontName, float fontSize) {

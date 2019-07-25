@@ -1,7 +1,6 @@
 package com.example.entity;
 
 import com.example.Utils;
-import com.example.entity.ext.Shoot;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.annotation.CollisionInfo;
 import de.gurkenlabs.litiengine.annotation.CombatInfo;
@@ -19,13 +18,11 @@ import java.awt.*;
 @CollisionInfo(collisionBoxWidth = 16, collisionBoxHeight = 18, collision = false)
 @CombatInfo(hitpoints = 1000)
 public class Tower extends Creature {
-  private Shoot shootAbility;
 
   public Tower() {
     super("bunker");
-    setTeam(0);
+    setTeam(Mob.LEFT_SIDE);
     setVelocity(0);
-    shootAbility = new Shoot(this);
     addHitListener(e -> {
       IAnimationController controller = e.getEntity().getAnimationController();
       controller.add(new OverlayPixelsImageEffect(50, Color.WHITE));

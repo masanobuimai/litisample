@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import com.example.Utils;
 import com.example.entity.ext.Shoot;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.IUpdateable;
@@ -20,7 +21,7 @@ public class SpecialMob extends Creature implements IUpdateable {
 
   public SpecialMob() {
     super("gurknukem");
-    setTeam(0);
+    setTeam(Mob.LEFT_SIDE);
     shoot = new Shoot(this);
     addDeathListener(e -> {
       log.info(() -> e + " is dead...");
@@ -33,11 +34,8 @@ public class SpecialMob extends Creature implements IUpdateable {
     if (isDead()) {
       return;
     }
-    Game.physics().move(this, this.getTickVelocity());
-    Game.world().environment().getCollisionBoxes().stream()
-        .filter(c -> c.getTags().contains("wall"))
-        .filter(c -> getHitBox().intersects(c.getCollisionBox()))
-        .forEach(c -> die());
     shoot.cast();
+    Game.physics().move(this, this.getTickVelocity());
+    Utils.checkCorner(this);
   }
 }

@@ -13,8 +13,8 @@ import java.awt.geom.Point2D;
     maxParticles = 1,
     spawnAmount = 1,
     emitterTTL = 900,
-    particleMinTTL = 900,
-    particleMaxTTL = 900
+    particleMinTTL = 600,
+    particleMaxTTL = 600
 )
 public class FloatingTextEmitter extends Emitter {
   private final String text;

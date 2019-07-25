@@ -13,6 +13,8 @@ import de.gurkenlabs.litiengine.resources.Resources;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -50,7 +52,7 @@ public class GameManager {
 
     Game.init();
     state = GameState.READY;
-    Game.graphics().setBaseRenderScale(2.0f);
+    Game.graphics().setBaseRenderScale(1.0f);
 
     Game.screens().add(new MainScreen());
     Game.screens().add(new TitleScreen());
@@ -72,21 +74,14 @@ public class GameManager {
     Input.mouse().setGrabMouse(false);
     Input.keyboard().onKeyReleased(KeyEvent.VK_ESCAPE, e -> System.exit(0));
     Input.keyboard().onKeyReleased(KeyEvent.VK_SPACE, e -> startGame());
-    Input.keyboard().onKeyReleased(KeyEvent.VK_F1, e -> {
-      if (state == GameState.INGAME && !tower().isDead()) {
-        tower.consumePill();
-      }
-    });
-    Input.keyboard().onKeyReleased(KeyEvent.VK_F2, e -> {
-      if (state == GameState.INGAME && !tower().isDead()) {
-        tower.consumeShake();
-      }
-    });
-    Input.keyboard().onKeyReleased(KeyEvent.VK_F3, e -> {
-      if (state == GameState.INGAME && !tower().isDead()) {
-        tower.consumeShoot();
-      }
-    });
+    Function<Runnable, Consumer<KeyEvent>> ke = r ->
+        e -> { if (state == GameState.INGAME && !tower().isDead()) r.run(); };
+    Input.keyboard().onKeyReleased(KeyEvent.VK_F2,
+                                   ke.apply(() -> tower.consumePill()));
+    Input.keyboard().onKeyReleased(KeyEvent.VK_F2,
+                                   ke.apply(() -> tower.consumeShake()));
+    Input.keyboard().onKeyReleased(KeyEvent.VK_F3,
+                                   ke.apply(() -> tower.consumeShoot()));
   }
 
 

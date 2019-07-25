@@ -14,13 +14,10 @@ public class Shoot extends Ability {
   private static final Logger log = Logger.getLogger(Shoot.class.getName());
 
   private static int damage = 100;
-  private ShootEffect shootEffect;
 
   public Shoot(Creature executor) {
     super(executor);
-
-    this.shootEffect = new ShootEffect(this);
-    this.addEffect(shootEffect);
+    this.addEffect(new ShootEffect(this));
   }
 
   public class ShootEffect extends Effect {

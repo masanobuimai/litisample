@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import com.example.Utils;
 import com.example.entity.ext.Charge;
 import com.example.entity.ext.FloatingTextEmitter;
 import de.gurkenlabs.litiengine.Game;
@@ -24,8 +25,8 @@ import java.util.logging.Logger;
 public abstract class Mob extends Creature implements IUpdateable {
   private static final Logger log = Logger.getLogger(Mob.class.getName());
 
-  protected static final int LEFT_SIDE = 0;
-  protected static final int RIGHT_SIDE = 1;
+  public static final int LEFT_SIDE = 0;
+  public static final int RIGHT_SIDE = 1;
 
   private Charge charge;
 
@@ -64,9 +65,6 @@ public abstract class Mob extends Creature implements IUpdateable {
     }
     charge.cast();
     Game.physics().move(this, this.getTickVelocity());
-    Game.world().environment().getCollisionBoxes().stream()
-        .filter(c -> c.getTags().contains("wall"))
-        .filter(c -> getHitBox().intersects(c.getCollisionBox()))
-        .forEach(c -> die());
+    Utils.checkCorner(this);
   }
 }
